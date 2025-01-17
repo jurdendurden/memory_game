@@ -1,3 +1,4 @@
+/* Font faces remain the same */
 @font-face {
     font-family: 'rainbow';
     src: url('./fonts/Rainbow Party.otf') format('truetype');
@@ -12,77 +13,83 @@
     font-style: normal;    
 }
 
+/* Base styles with responsive units */
 body {
     font-family: 'sunshine', Arial, Helvetica, sans-serif;
     text-align: center;
     background-color: #50aad1;
     color: #FFFFFF;
+    margin: 0;
+    padding: 1rem;
+    box-sizing: border-box;
 }
 
 .label {
-    border-color: black;
-    border-radius: 2px;
-    border-style: solid;    
+    border: 2px solid black;
+    border-radius: 4px;
 }
 
 .background_img {
     opacity: 0.5;
     z-index: -999;
+    max-width: 100%;
+    height: auto;
 }
 
+/* Responsive typography */
 h1 {
-    font-size: 100px;
+    font-size: clamp(2.5rem, 8vw, 6.25rem); /* 40px to 100px */
+    margin-top: 1.25rem;
 }
 
-h1, h2 {
-    margin-top: 20px;
+h2 {
+    font-size: clamp(1.75rem, 5vw, 2.5rem);
+    margin-top: 1.25rem;
 }
 
 h3 {
-    font-size: 28px;
-}
-
-.label {
-    border-width: 2px;
-    border-color: black;    
-    border-radius: 4px;
+    font-size: clamp(1.25rem, 3vw, 1.75rem);
 }
 
 #start_window {
-    margin-top: 20px;
-    font-size: 36px;
+    margin-top: 1.25rem;
+    font-size: clamp(1.5rem, 4vw, 2.25rem);
 }
 
+/* Responsive buttons */
 button {
-    margin: 8px;
-    padding: 10px 20px;
-    font-size: 28px;
-    cursor: pointer;    
+    margin: 0.5rem;
+    padding: 0.625rem 1.25rem;
+    font-size: clamp(1rem, 2.5vw, 1.75rem);
+    cursor: pointer;
     border-radius: 4px;
     font-family: 'sunshine', Arial, Helvetica, sans-serif;
     background-color: rgb(199, 199, 192);
-
 }
 
 .color_button {
-    margin: 4px;
-    width: 16px;
-    height: 16px;    
+    margin: 0.25rem;
+    width: clamp(12px, 2vw, 16px);
+    height: clamp(12px, 2vw, 16px);
     cursor: pointer;
     border-radius: 4px;
 }
 
+/* Responsive game board */
 #game_board {
     display: grid;
     justify-content: center;
-    gap: 10px;
-    margin: 20px auto;
+    gap: 0.625rem;
+    margin: 1.25rem auto;
+    max-width: 100%;
+    padding: 0 1rem;
 }
 
+/* Responsive tiles */
 .tile {
-    width: 100px;
-    height: 100px;
-    perspective: 1000px; /* Ensure 3D flip looks correct */
+    width: clamp(60px, 15vw, 100px);
+    height: clamp(60px, 15vw, 100px);
+    perspective: 1000px;
 }
 
 .tile_inner {
@@ -94,34 +101,30 @@ button {
     cursor: pointer;
 }
 
-.tile.flipped .tile_inner {
-    transform: rotateY(180deg);
-}
-
 .tile_front, .tile_back {
     font-family: 'rainbow';
     position: absolute;
     width: 100%;
     height: 100%;
-    backface-visibility: hidden; /* Prevent seeing the back side before flipping */
+    backface-visibility: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
     border: 2px solid #000000;
     border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);    
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .tile_front {
     background-color: rgb(92, 92, 255);
     color: white;
-    font-size: 60px;
+    font-size: clamp(2rem, 6vw, 3.75rem);
 }
 
 .tile_back {
     background-color: white;
-    transform: rotateY(180deg); /* Flip the back content */
-    color: black;    
+    transform: rotateY(180deg);
+    color: black;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -129,49 +132,62 @@ button {
 }
 
 .tile_back .tile_name {
-    font-size: 28px;
-    margin-top: 4px;    
-    height: 20px;  
+    font-size: clamp(1rem, 2.5vw, 1.75rem);
+    margin-top: 0.25rem;
+    height: clamp(12px, 2.5vw, 20px);
 }
 
 .tile_back .logo {
-    width: 80px;
-    height: 80px;   
-    background-size: contain; 
+    width: clamp(48px, 10vw, 80px);
+    height: clamp(48px, 10vw, 80px);
+    background-size: contain;
     background-position: center;
-    background-repeat: no-repeat;  
+    background-repeat: no-repeat;
 }
 
 #game_window {
-    margin-top: 20px;
-    font-size: 30px;
+    margin-top: 1.25rem;
+    font-size: clamp(1.25rem, 3vw, 1.875rem);
 }
 
-.selected {
-    background-color: rgb(92, 92, 255);
-    color: white;
-    border: 2px solid #000000;
-    
+/* Media queries for specific adjustments */
+@media screen and (max-width: 768px) {
+    #game_board {
+        gap: 0.5rem;
+        padding: 0 0.5rem;
+    }
+
+    button {
+        padding: 0.5rem 1rem;
+        margin: 0.25rem;
+    }
 }
 
-/* Animation for inflating the score */
+@media screen and (max-width: 480px) {
+    body {
+        padding: 0.5rem;
+    }
+
+    .tile_back .logo {
+        width: 85%;
+        height: 85%;
+    }
+
+    .bounce_text span {
+        animation-duration: 1s;
+    }
+}
+
+/* Animations remain the same */
 @keyframes inflate {
-    0% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.5);
-    }
-    100% {
-        transform: scale(1);
-    }
+    0% { transform: scale(1); }
+    50% { transform: scale(1.5); }
+    100% { transform: scale(1); }
 }
-
 
 .animate-score {
     animation: inflate 0.5s ease-in-out;
 }
-
 
 .bounce_text span {    
     position: relative;
@@ -180,14 +196,9 @@ button {
     animation-delay: calc(.08s * var(--i));
     border-color: #000000;
     border-width: 1px;
-    
 }
   
 @keyframes bounce_text {
-    0%,40%,100% {
-      transform: translateY(0)
-    }
-    20% {
-      transform: translateY(-20px)
-    }
+    0%,40%,100% { transform: translateY(0) }
+    20% { transform: translateY(-20px) }
 }
